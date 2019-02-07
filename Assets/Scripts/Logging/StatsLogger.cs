@@ -21,7 +21,7 @@ namespace NESTrisStatsViz
 
         private bool isNewGame(StatState s)
         {
-            return (s.Score == 0 && s.numPieces() <= 1 && prevState.numPieces() >= 1);
+            return (s.Score == 0 && s.NumPieces == 1 && prevState.NumPieces >= 1);
         }
 
         private void OnNewGame()
@@ -33,18 +33,17 @@ namespace NESTrisStatsViz
         private void processEvent(JSONNode obj)
         {
             StatState currentState = new StatState(obj);
-            if (currentState.hasValues())
+            if (currentState.IsValid)
             {
                 if (prevState == null || isNewGame(currentState)) //first game
                 {
-                    Debug.Log("newgame");
                     OnNewGame();
                 }
                 gameState.processEvent(currentState);
                 prevState = currentState;
             } else
             {
-                Debug.Log("invalid");
+                Debug.Log("Currently in menu?");
             }
         }
 

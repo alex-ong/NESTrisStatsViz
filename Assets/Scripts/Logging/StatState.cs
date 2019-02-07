@@ -36,58 +36,59 @@ namespace NESTrisStatsViz
             return result;
         }
 
-        public bool hasValues()
+        public int NumPieces
         {
-            return (score.HasValue &&
-                   lines.HasValue &&
-                   level.HasValue &&
-                   t.HasValue &&
-                   j.HasValue &&
-                   z.HasValue &&
-                   o.HasValue &&
-                   s.HasValue &&
-                   l.HasValue &&
-                   i.HasValue);
+            get { return t + j + z + o + s + l + i; }
         }
 
-        //only call if isValid!
-        public int numPieces()
-        {
-            return (t.Value + j.Value + z.Value + o.Value + s.Value + l.Value + i.Value);
-        }
-
-        private static int? valueToInt(SimpleJSON.JSONNode node, string key)
+        private int valueToInt(SimpleJSON.JSONNode node, string key)
         {
             if (node[key] == null)
             {
-                return null;
+                isValid = false;
+                return -1;
             }
             else
-            {                
+            {
                 return int.Parse(node[key]);
             }
         }
 
-        private int? score = null;
-        private int? lines = null;
-        private int? level = null;
-        private int? t = null;
-        private int? j = null;
-        private int? z = null;
-        private int? o = null;
-        private int? s = null;
-        private int? l = null;
-        private int? i = null;
+        private bool isValid = true;
+        private int score;
+        private int lines;
+        private int level;
+        private int t;
+        private int j;
+        private int z;
+        private int o;
+        private int s;
+        private int l;
+        private int i;
 
-        public int? Score { get { return score; } }
-        public int? Lines { get { return lines; } }
-        public int? Level { get { return level; } }
-        public int? T { get { return t; } }
-        public int? J { get { return j; } }
-        public int? Z { get { return z; } }
-        public int? O { get { return o; } }
-        public int? S { get { return s; } }
-        public int? L { get { return l; } }
-        public int? I { get { return i; } }
+        public bool IsValid { get { return isValid; } }
+        public int Score { get { return score; } }
+        public int Lines { get { return lines; } }
+        public int Level { get { return level; } }
+        public int T { get { return t; } }
+        public int J { get { return j; } }
+        public int Z { get { return z; } }
+        public int O { get { return o; } }
+        public int S { get { return s; } }
+        public int L { get { return l; } }
+        public int I { get { return i; } }
+        public override string ToString()
+        {
+            return Score.ToString() + "|" +
+                    Lines.ToString() + "|" +
+                    Level.ToString() + "|" +
+                T.ToString() + "," +
+                J.ToString() + "," +
+                Z.ToString() + "," +
+                O.ToString() + "," +
+                S.ToString() + "," +
+                L.ToString() + "," +
+                I.ToString() + ",";
+        }
     }
 }
