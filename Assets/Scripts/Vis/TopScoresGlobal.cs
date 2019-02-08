@@ -21,6 +21,7 @@ namespace NESTrisStatsViz
         public List<Text> ratios;
         public List<Text> dates;
 
+        private static string DateFormat = "yyyy/MM/dd";
         public override void FirstTimeSetup()
         {
             sortedData = new List<GameStateSummary>(statsLogger.lifeTimeState.games);
@@ -60,15 +61,15 @@ namespace NESTrisStatsViz
                 scores[i].text = gss.score.ToString("000000");
                 levels[i].text = gss.startLevel.ToString("00");
                 lines[i].text = gss.linesCleared.ToString("00");
-                int ratio = Mathf.RoundToInt(gss.tetrisCount / (float)gss.linesCleared * 100);
+                int ratio = 0;
+                if (gss.tetrisCount > 0)
+                {
+                    ratio = Mathf.RoundToInt(gss.tetrisCount / (float)gss.linesCleared * 100);
+                }
                 ratios[i].text = ratio.ToString("00") + "%";
-                dates[i].text = formatDate(gss.startTime);
+                dates[i].text = gss.startTime.ToString(DateFormat);
             }
         }
 
-        protected string formatDate(string date)
-        {
-            return date.Substring(0, 4) + "/" + date.Substring(4, 2) + "/" + date.Substring(6, 2);
-        }
     }
 }

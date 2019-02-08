@@ -20,8 +20,11 @@ namespace NESTrisStatsViz
         private StatState lastState = null;
         public int LinesCleared { get { return lastState.Lines; } }
         public int Score { get { return lastState.Score; } }
-        private string startTime;
-        public string StartTime { get { return startTime; } }
+        private DateTime startTime;
+        public DateTime StartTime { get { return startTime; } }
+        private DateTime finishTime;
+        public DateTime FinishTime { get { return finishTime; } }
+        public TimeSpan Duration { get { return finishTime - startTime; } }
 
         private void GenerateTenLineGoal()
         {
@@ -34,7 +37,7 @@ namespace NESTrisStatsViz
             {
                 lastState = current;
                 startLevel = lastState.Level;
-                startTime = DateTime.Now.ToString("yyyyMMddHHmm");
+                startTime = DateTime.Now;
                 GenerateTenLineGoal();
                 return;
             }
@@ -49,9 +52,10 @@ namespace NESTrisStatsViz
                 Debug.Log(diff);
                 return;
             }
-            
+
             ProcessSoftDrop(diff, current);
             ProcessLineScore(diff, current);
+            finishTime = DateTime.Now;
             lastState = current;
         }
 
