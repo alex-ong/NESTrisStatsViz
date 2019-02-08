@@ -17,17 +17,21 @@ namespace NESTrisStatsViz
 
         public StatState prevState = null;
         public GameState gameState = null;
-        public LifeTimeState lifeTimeState = null;
+        public LifeTimeState lifeTimeState = new LifeTimeState();
 
-        private bool isNewGame(StatState s)
+        private bool isNewGame(StatState prevState, StatState current)
         {
-            return (s.Score == 0 && s.NumPieces == 1 && prevState.NumPieces >= 1);
+            return (!prevState.IsValid && current.Lines == 0);
         }
 
         private void OnNewGame()
-        {
-            //todo: export old game somewhere, update global stats etc.
+        {            
+            if (gameState != null)
+            {
+                lifeTimeState.FlushGameState();
+            }
             gameState = new GameState();
+            lifeTimeState.SetGameState(gameState);
         }
 
         private void processEvent(JSONNode obj)
@@ -35,22 +39,15 @@ namespace NESTrisStatsViz
             StatState currentState = new StatState(obj);
             if (currentState.IsValid)
             {
-                if (prevState == null || isNewGame(currentState)) //first game
+                if (prevState == null || isNewGame(prevState, currentState)) //first game
                 {
                     OnNewGame();
                 }
                 gameState.processEvent(currentState);
-                prevState = currentState;
-            } else
-            {
-                Debug.Log("Currently in menu?");
+
             }
+            prevState = currentState;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

@@ -7,51 +7,63 @@ namespace NESTrisStatsViz
     //All the info about a game.
     public class GameState
     {
-        public int currentScore = 0;
-        public int currentLevel = 0;
         public int startLevel = 0;
 
         public List<LineScore> lineScores = new List<LineScore>();
-        public List<LineScore> lineScoresSD = new List<LineScore>(); //including softdrop
-        public List<string> pieceHistory = new List<string>();
-        public int totalPieces = 0;
-        public int[] lineStats = new int[4];
-        public int numDouble = 0;
-        public int numTriple = 0;
-        public int numTetris = 0;
+        public List<int> tenLineScores = new List<int>();
+        public List<int> tenLineGoal = new List<int>();
+        public List<int> lineHistory = new List<int>();
+        public int[] distClears = new int[4];
+        public int[] distScores = new int[4];
+
         public int softDropTotal = 0;
         private StatState lastState = null;
+        public int LinesCleared { get { return lastState.Lines; } }
+        public int Score { get { return lastState.Score; } }
+        private string startTime;
+        public string StartTime { get { return startTime; } }
 
-        public void processEvent(StatState s)
+        private void GenerateTenLineGoal()
+        {
+
+        }
+
+        public void processEvent(StatState current)
         {
             if (lastState == null)
             {
-                lastState = s;
+                lastState = current;
+                startLevel = lastState.Level;
+                startTime = DateTime.Now.ToString("yyyyMMddHHmm");
+                GenerateTenLineGoal();
                 return;
             }
-            StatState diff = lastState.diff(s);
+            StatState diff = lastState.diff(current);
 
             //quick sanity check
-            if (!legitDiff(diff, s))
+            if (!LegitDiff(diff, current))
             {
+                Debug.Log(":(");
+                Debug.Log(lastState);
+                Debug.Log(current);
+                Debug.Log(diff);
                 return;
             }
-            Debug.Log("still happy");
-            //todo: nifty stats go here!
-            ProcessPieceHistory(diff);
-            ProcessSoftDrop(diff, s);
-            ProcessLineScore(diff, s);
-            lastState = s;
+            
+            ProcessSoftDrop(diff, current);
+            ProcessLineScore(diff, current);
+            lastState = current;
         }
 
-        private bool legitDiff(StatState diff, StatState current)
+        private bool LegitDiff(StatState diff, StatState current)
         {
             if (diff.Lines < 0 || diff.Lines > 4)
             {
+                Debug.Log("lines" + diff.Lines.ToString());
                 return false;
             }
 
-            if (diff.Level > 1)
+            if (diff.Level < 0 || diff.Level > 1)
             {
                 return false;
             }
@@ -59,17 +71,10 @@ namespace NESTrisStatsViz
             //we scored more than a tetris + softdrop...
             if (diff.Score > ScoreTable.getScore(4, current.Level) + 50)
             {
+                Debug.Log(diff.Score.ToString() + (ScoreTable.getScore(4, current.Level) + 50).ToString());
                 return false;
             }
 
-            if (diff.NumPieces < 0 || diff.NumPieces > 2)
-            {
-                //TODO: attempt to correct pieces...
-                Debug.Log("warning, more than 1 piece difference...");
-                Debug.Log(diff);
-                Debug.Log(current);
-                return false;
-            }
             return true;
         }
 
@@ -79,10 +84,14 @@ namespace NESTrisStatsViz
             {
                 return;
             }
-            if (diff.Lines <= 4 && diff.Lines >= 1)
+
+            distClears[diff.Lines - 1] += 1;
+            distScores[diff.Lines - 1] += ScoreTable.getScore(diff.Lines, newState.Level);
+            if ((newState.Lines / 10) > tenLineScores.Count)
             {
-                lineStats[diff.Lines - 1] += 1;
+                tenLineScores.Add(newState.Score);
             }
+            lineHistory.Add(diff.Lines);
             lineScores.Add(new LineScore(newState.Lines, newState.Score));
         }
 
@@ -96,18 +105,6 @@ namespace NESTrisStatsViz
             {
                 softDropTotal += diff.Score - ScoreTable.getScore(diff.Lines, newState.Level);
             }
-            Debug.Log("SoftDrop bonus cumul" + softDropTotal.ToString());
-        }
-
-        private void ProcessPieceHistory(StatState diff)
-        {
-            for (int i = 0; i < diff.T; i++) pieceHistory.Add("T");
-            for (int i = 0; i < diff.J; i++) pieceHistory.Add("J");
-            for (int i = 0; i < diff.Z; i++) pieceHistory.Add("Z");
-            for (int i = 0; i < diff.O; i++) pieceHistory.Add("O");
-            for (int i = 0; i < diff.S; i++) pieceHistory.Add("S");
-            for (int i = 0; i < diff.L; i++) pieceHistory.Add("L");
-            for (int i = 0; i < diff.I; i++) pieceHistory.Add("I");
         }
     }
 }

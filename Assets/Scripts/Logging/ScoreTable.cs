@@ -27,6 +27,6 @@ namespace NESTrisStatsViz
         {
             return lineMult(linesCleared) * (level + 1);
         }
- 
+        
     }
 }

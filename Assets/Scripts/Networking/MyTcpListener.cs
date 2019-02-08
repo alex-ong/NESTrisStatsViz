@@ -73,7 +73,7 @@ public class MyTcpListener : MonoBehaviour
 
             // TcpListener server = new TcpListener(port);
             server = new TcpListener(IPAddress.Any, port);
-
+            server.Server.NoDelay = true;
             // Start listening for client requests.
             server.Start();
 
@@ -84,7 +84,7 @@ public class MyTcpListener : MonoBehaviour
             {
                 // Perform a blocking call to accept requests.
                 TcpClient client = server.AcceptTcpClient();
-
+                client.NoDelay = true;
                 //Process each client in a new thread.
                 Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClient));
                 clientThread.Start(client);
@@ -120,6 +120,7 @@ public class MyTcpListener : MonoBehaviour
 
         // Get a stream object for reading and writing
         NetworkStream stream = client.GetStream();
+        
         int header = -1;
         int bytesRead;
         try
@@ -153,6 +154,7 @@ public class MyTcpListener : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("breaking?");
                     break;
                 }
             }
