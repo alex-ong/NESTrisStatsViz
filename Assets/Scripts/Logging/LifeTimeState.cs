@@ -55,8 +55,10 @@ namespace NESTrisStatsViz
             totalGames += 1;
             totalLines += gs.LinesCleared;
             totalSoftDrop += gs.softDropTotal;
+            totalGameTime += gs.Duration;
             GameStateSummary summary = new GameStateSummary(gs);
             games.Add(summary);
+            
             //save the summary.
             if (File.Exists(BASE_DIR + GAME_STATS))
             {
