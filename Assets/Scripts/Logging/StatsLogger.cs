@@ -18,14 +18,15 @@ namespace NESTrisStatsViz
         public StatState prevState = null;
         public GameState gameState = null;
         public LifeTimeState lifeTimeState = new LifeTimeState();
-
+        private float lastMessageTimeStamp = 0.0f;
+        public float LastMessageTimeStamp { get { return lastMessageTimeStamp; } }
         private bool isNewGame(StatState prevState, StatState current)
         {
             return (!prevState.IsValid && current.Lines == 0);
         }
 
         private void OnNewGame()
-        {            
+        {
             if (gameState != null)
             {
                 lifeTimeState.FlushGameState();
@@ -36,6 +37,7 @@ namespace NESTrisStatsViz
 
         private void processEvent(JSONNode obj)
         {
+            lastMessageTimeStamp = Time.realtimeSinceStartup;
             StatState currentState = new StatState(obj);
             if (currentState.IsValid)
             {

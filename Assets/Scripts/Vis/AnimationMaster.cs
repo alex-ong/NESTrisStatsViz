@@ -12,6 +12,9 @@ namespace NESTrisStatsViz
         // Use this for initialization
         public int currentIndex = 0;
         private AbstractAnimation current;
+        bool isPaused = false;
+
+        public PauseSprite pauseSprite;
 
         void Awake()
         {
@@ -29,6 +32,23 @@ namespace NESTrisStatsViz
             }
         }
 
+        private void Next()
+        {
+
+            current.gameObject.SetActive(false);
+            currentIndex = (currentIndex + 1) % animations.Count;
+            current = animations[currentIndex];
+            current.gameObject.SetActive(true);
+
+        }
+
+        private void Prev()
+        {
+            current.gameObject.SetActive(false);
+            currentIndex = ((currentIndex - 1) + animations.Count) % animations.Count;
+            current = animations[currentIndex];
+            current.gameObject.SetActive(true);
+        }
 
         // Update is called once per frame
         void Update()
@@ -39,13 +59,22 @@ namespace NESTrisStatsViz
                 current.gameObject.SetActive(true);
             }
 
-            if (current.Timer >= current.Duration)
+            if (current.Timer >= current.Duration && !isPaused)
             {
-                current.gameObject.SetActive(false);
-                currentIndex = (currentIndex + 1) % animations.Count;
-                current = animations[currentIndex];
-                current.gameObject.SetActive(true);
+                Next();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Next();
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                isPaused = !isPaused;
+                pauseSprite.ChangeSprite(isPaused);
             }
         }
+
     }
 }

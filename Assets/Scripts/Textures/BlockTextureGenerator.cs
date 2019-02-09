@@ -10,16 +10,54 @@ public class BlockTextureGenerator : Singleton<BlockTextureGenerator>
     public Texture2D filledBlockBordered;
     public Texture2D whiteBlockBordered;
 
+    public enum BlockType
+    {
+        WHITE = 0,
+        PRIMARY = 1,
+        SECONDARY = 2
+    }
+    public enum Border
+    {
+        BORDER,
+        ORIGINAL
+    }
+
     private bool ready = false;
     public bool Ready { get { return ready; } }
-    
-    public List<Texture2D> textures = new List<Texture2D>();
-    public List<Sprite> sprites = new List<Sprite>();
-    public List<Texture2D> texturesBordered = new List<Texture2D>();
-    public List<Sprite> spritesBordered = new List<Sprite>();
+
+    [SerializeField]
+    private List<Texture2D> textures = new List<Texture2D>();
+    [SerializeField]
+    private List<Sprite> sprites = new List<Sprite>();
+    [SerializeField]
+    private List<Texture2D> texturesBordered = new List<Texture2D>();
+    [SerializeField]
+    private List<Sprite> spritesBordered = new List<Sprite>();
     public void Awake()
     {
         StartCoroutine(generateTextures());
+    }
+
+    static protected int getIndex(int level, Border b, BlockType bt)
+    {
+        level %= 10;
+        int index = (int)bt + 3 * level;
+        return index;
+    }
+
+
+    public Sprite getLevelSprite(int level, Border b, BlockType bt)
+    {
+        if (!ready) return null;
+        List<Sprite> items = (b == Border.BORDER) ? this.spritesBordered : this.sprites;
+        return items[getIndex(level, b, bt)];
+    }
+
+    public Texture2D getLevelTexture(int level, Border b, BlockType bt)
+    {
+        if (!ready) return null;
+        List<Texture2D> items = (b == Border.BORDER) ? this.texturesBordered : this.textures;
+        return items[getIndex(level, b, bt)];
     }
 
     public IEnumerator generateTextures()
@@ -83,15 +121,4 @@ public class BlockTextureGenerator : Singleton<BlockTextureGenerator>
         return result;
     }
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
