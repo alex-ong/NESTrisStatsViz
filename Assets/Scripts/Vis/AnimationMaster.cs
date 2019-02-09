@@ -6,6 +6,7 @@ namespace NESTrisStatsViz
 {
     public class AnimationMaster : MonoBehaviour
     {
+        public Camera mainCamera;
         public StatsLogger statsLogger;
         public List<AbstractAnimation> animations;
         // Use this for initialization

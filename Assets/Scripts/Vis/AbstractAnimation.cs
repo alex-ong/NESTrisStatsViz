@@ -7,6 +7,7 @@ namespace NESTrisStatsViz
 {
     public abstract class AbstractAnimation : MonoBehaviour
     {
+        public Camera alternateCamera;
         public StatsLogger statsLogger;
         public abstract float Duration { get; }
         protected float _timer;

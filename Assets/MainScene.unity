@@ -869,6 +869,8 @@ Transform:
   - {fileID: 859651881}
   - {fileID: 1335653067}
   - {fileID: 1189784388}
+  - {fileID: 876465137}
+  - {fileID: 1369334151}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -883,6 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b0f6e505ce4dc428fde599a2de3a2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 876465136}
   statsLogger: {fileID: 853155516}
   animations:
   - {fileID: 1584968209}
@@ -2035,6 +2038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700da281343b37c44b4fd520f2f356ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alternateCamera: {fileID: 0}
   statsLogger: {fileID: 0}
   scores:
   - {fileID: 1251904151}
@@ -2213,12 +2217,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 876465133}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 333450685}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &911001972
 GameObject:
@@ -3014,7 +3018,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1185612452
 GameObject:
@@ -3131,6 +3135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68cafafd5c4730643a1988a9d80a372d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alternateCamera: {fileID: 0}
   statsLogger: {fileID: 0}
   totalTime: {fileID: 771099352}
   gameTime: {fileID: 1321735795}
@@ -3991,6 +3996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f84e12d15c84940b136dabaec64469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alternateCamera: {fileID: 0}
   statsLogger: {fileID: 0}
   linesCleared: {fileID: 1231056320}
   gamesPlayed: {fileID: 628973929}
@@ -4069,6 +4075,34 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1360943290}
+--- !u!1 &1369334150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1369334151}
+  m_Layer: 0
+  m_Name: GamesToday
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1369334151
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1369334150}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 333450685}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1392814963
 GameObject:
   m_ObjectHideFlags: 0
@@ -4622,6 +4656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aac9e44aec1bc94295e5b3b1c0f78d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alternateCamera: {fileID: 0}
   statsLogger: {fileID: 0}
   scores:
   - {fileID: 702403674}
@@ -4639,6 +4674,55 @@ MonoBehaviour:
   - {fileID: 1977576658}
   - {fileID: 1243998864}
   softDropScore: {fileID: 1778699688}
+--- !u!1 &1603357337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1603357338}
+  - component: {fileID: 1603357339}
+  m_Layer: 0
+  m_Name: BlockTextureGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1603357338
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1603357337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1603357339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1603357337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa1864fa79b8e647b13b49a66df0032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  palette: {fileID: 2800000, guid: 6884c60216cae4b49beb8b04df1a484f, type: 3}
+  filledBlock: {fileID: 2800000, guid: f632862daae6bde4b9dadaaf2dc64da6, type: 3}
+  whiteBlock: {fileID: 2800000, guid: e14c253c81a1b7043b821ed9b25d86b1, type: 3}
+  filledBlockBordered: {fileID: 2800000, guid: 4d340f87a15e1a644965660015ea9eb7, type: 3}
+  whiteBlockBordered: {fileID: 2800000, guid: 867fa180ff231644596a6c19ce249989, type: 3}
+  textures: []
+  sprites: []
+  texturesBordered: []
+  spritesBordered: []
 --- !u!1 &1634471259
 GameObject:
   m_ObjectHideFlags: 0
