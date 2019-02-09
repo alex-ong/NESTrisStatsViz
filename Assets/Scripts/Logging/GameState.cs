@@ -38,6 +38,7 @@ namespace NESTrisStatsViz
                 lastState = current;
                 startLevel = lastState.Level;
                 startTime = DateTime.Now;
+                finishTime = DateTime.Now;
                 GenerateTenLineGoal();
                 return;
             }
@@ -53,9 +54,9 @@ namespace NESTrisStatsViz
                 return;
             }
 
+            finishTime = DateTime.Now;
             ProcessSoftDrop(diff, current);
             ProcessLineScore(diff, current);
-            finishTime = DateTime.Now;
             lastState = current;
         }
 
@@ -96,7 +97,7 @@ namespace NESTrisStatsViz
                 tenLineScores.Add(newState.Score);
             }
             lineHistory.Add(diff.Lines);
-            lineScores.Add(new LineScore(newState.Lines, newState.Score));
+            lineScores.Add(new LineScore(newState.Lines, newState.Score, this.Duration));
         }
 
         private void ProcessSoftDrop(StatState diff, StatState newState)

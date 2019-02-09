@@ -64,7 +64,7 @@ namespace NESTrisStatsViz
                 int ratio = 0;
                 if (gss.tetrisCount > 0)
                 {
-                    ratio = Mathf.RoundToInt(gss.tetrisCount / (float)gss.linesCleared * 100);
+                    ratio = Mathf.RoundToInt((gss.tetrisCount*4) / (float)gss.linesCleared * 100);
                 }
                 ratios[i].text = ratio.ToString("00") + "%";
                 dates[i].text = gss.startTime.ToString(DateFormat);
