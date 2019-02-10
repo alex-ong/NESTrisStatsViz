@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using ExtensionMethods;
 
 namespace NESTrisStatsViz.LastTenGames
 {
@@ -17,14 +18,11 @@ namespace NESTrisStatsViz.LastTenGames
         }
         public List<LastGameGUI> gameSummaries;
         public Text averageScore;
-        
+
         public override void ChildUpdate()
         {
             List<GameStateSummary> gss = this.statsLogger.lifeTimeState.games;
-            int count = gss.Count;
-            int amount = Mathf.Min(10, count);
-            int startIndex = gss.Count - 1 - amount;
-            gss = gss.GetRange(startIndex, amount);
+            gss = gss.LastN(10);
             if (this.statsLogger.gameState != null)
             {
                 gss.Add(new GameStateSummary(this.statsLogger.gameState));

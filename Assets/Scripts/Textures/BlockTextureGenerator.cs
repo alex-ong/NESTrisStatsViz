@@ -71,8 +71,8 @@ public class BlockTextureGenerator : Singleton<BlockTextureGenerator>
 
         for (int i = 0; i < 10; i++)
         {
-            Color primary = pixels[i];
-            Color secondary = pixels[i + 10];
+            Color primary = pixels[i + 10];
+            Color secondary = pixels[i];
 
             //Original textures
             textures.Add(generateTexture(whiteBlock, primary));

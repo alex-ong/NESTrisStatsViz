@@ -8,7 +8,7 @@ namespace NESTrisStatsViz
     public class GameState
     {
         public int startLevel = 0;
-
+        public int currentLevel = 0;
         public List<LineScore> lineScores = new List<LineScore>();
         public List<int> tenLineScores = new List<int>();
         public List<int> tenLineGoal = new List<int>();
@@ -36,7 +36,8 @@ namespace NESTrisStatsViz
             if (lastState == null)
             {
                 lastState = current;
-                startLevel = lastState.Level;
+                startLevel = current.Level;
+                currentLevel = current.Level;
                 startTime = DateTime.Now;
                 finishTime = DateTime.Now;
                 GenerateTenLineGoal();
@@ -57,6 +58,7 @@ namespace NESTrisStatsViz
             finishTime = DateTime.Now;
             ProcessSoftDrop(diff, current);
             ProcessLineScore(diff, current);
+            currentLevel = current.Level;
             lastState = current;
         }
 

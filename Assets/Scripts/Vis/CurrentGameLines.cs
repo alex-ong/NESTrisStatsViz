@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace NESTrisStatsViz
         public List<Text> counts;
         public List<Text> linePerc;
         public Text softDropScore;
+        public LineHistory.LineHistory history;
         public void RefreshText()
         {
 
@@ -46,8 +48,15 @@ namespace NESTrisStatsViz
         public override void ChildUpdate()
         {
             RefreshText();
+            RefreshLineHistory();
         }
-
+        
+        private void RefreshLineHistory()
+        {
+            GameState gs = statsLogger.gameState;
+            if (gs == null) return;
+            history.SetHistory(gs.currentLevel, gs.lineHistory);
+        }
 
         protected override void ChildOnEnable()
         {
