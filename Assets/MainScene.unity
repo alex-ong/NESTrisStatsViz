@@ -2216,6 +2216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 333450685}
   - component: {fileID: 333450686}
+  - component: {fileID: 333450687}
   m_Layer: 0
   m_Name: AnimationMaster
   m_TagString: Untagged
@@ -2266,6 +2267,17 @@ MonoBehaviour:
   - {fileID: 1369334152}
   currentIndex: 0
   pauseSprite: {fileID: 974326308}
+--- !u!114 &333450687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 333450684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc7bf84779f2c948a3bcb5964eea4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &333451820
 GameObject:
   m_ObjectHideFlags: 0
@@ -14189,7 +14201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statsLogger: {fileID: 853155516}
-  AutoRestart: 0
+  AutoRestart: 1
   AutoRestartTime: 3
   PythonExe: C:/Python36-32/python.exe
   WorkingDir: C:/Dev/NESTrisOCR

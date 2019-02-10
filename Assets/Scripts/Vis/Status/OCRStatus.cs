@@ -14,6 +14,7 @@ namespace NESTrisStatsViz
         private Image image;
         public bool AutoRestart = false;
         public float AutoRestartTime = 5.0f;
+        private float BlinkTime = 0.1f;
         private float lastRestartTime;
         public string PythonExe;
         public string WorkingDir;
@@ -27,7 +28,7 @@ namespace NESTrisStatsViz
         private void Awake()
         {
             image = this.GetComponent<Image>();
-            lastRestartTime = -AutoRestartTime - 3 * float.Epsilon;
+            lastRestartTime = float.Epsilon;
             //todo; read python,workingdir,file from config.
         }
 
@@ -41,9 +42,8 @@ namespace NESTrisStatsViz
         void Update()
         {
             float alpha = 1.0f;
-            if ((Time.realtimeSinceStartup - statsLogger.LastMessageTimeStamp) > AutoRestartTime)
-            {
-                //todo autorestart.
+            if ((Time.realtimeSinceStartup - statsLogger.LastMessageTimeStamp) > BlinkTime)
+            {                
                 alpha = (Mathf.Sin(Time.realtimeSinceStartup * 4.0f) * 0.5f) + 0.5f;
                 
                 if (AutoRestart && Time.realtimeSinceStartup > EarliestRestartTime())
@@ -52,6 +52,7 @@ namespace NESTrisStatsViz
                     RestartDaemon();
                 }
             }
+
             ChangeAlpha(alpha);
         }
 
@@ -70,6 +71,7 @@ namespace NESTrisStatsViz
                 {
                     //pass.
                 }
+                lastPID = null;
             }
 
             //start.
@@ -78,6 +80,23 @@ namespace NESTrisStatsViz
             Process p = Process.Start(psi);
             lastPID = p.Id;
 
+        }
+
+        public void OnDestroy()
+        {
+            if (lastPID != null)
+            {
+                try
+                {
+                    Process toKill = Process.GetProcessById(lastPID.Value);
+                    toKill.Kill();
+                }
+                catch (InvalidOperationException) //already dead
+                {
+                    //pass.
+                }
+                lastPID = null;
+            }
         }
     }
 }
