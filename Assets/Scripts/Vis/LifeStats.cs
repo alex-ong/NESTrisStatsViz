@@ -1,13 +1,13 @@
 ﻿using UnityEngine.UI;
 namespace NESTrisStatsViz
 {
-    public class LifeStats : AbstractAnimation
+    public class LifeStats : FallingBlocks
     {
         public override float Duration
         {
             get
             {
-                return 5f;
+                return 10f;
             }
         }
 
@@ -26,6 +26,7 @@ namespace NESTrisStatsViz
         public override void ChildUpdate()
         {
             UpdateText();
+            base.ChildUpdate();
         }
     }
 }

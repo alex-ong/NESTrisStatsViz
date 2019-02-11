@@ -39,12 +39,26 @@ namespace NESTrisStatsViz
             currentIndex = (currentIndex + 1) % animations.Count;
             current = animations[currentIndex];
             current.gameObject.SetActive(true);
+            if (current.alternateCamera != null)
+            {
+                current.alternateCamera.gameObject.SetActive(true);
+                mainCamera.gameObject.SetActive(false);
+            }
+            else
+            {
+                mainCamera.gameObject.SetActive(true);
+            }
 
         }
 
         private void Prev()
         {
             current.gameObject.SetActive(false);
+            if (current.alternateCamera != null)
+            {
+                current.alternateCamera.gameObject.SetActive(false);
+            }
+            mainCamera.gameObject.SetActive(true);
             currentIndex = ((currentIndex - 1) + animations.Count) % animations.Count;
             current = animations[currentIndex];
             current.gameObject.SetActive(true);
