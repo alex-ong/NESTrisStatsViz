@@ -21,11 +21,12 @@ namespace NESTrisStatsViz.LineHistory
                     GameObject go = Instantiate(prefab.gameObject);
                     BlockHandler bh = go.GetComponent<BlockHandler>();
                     RectTransform rt = go.GetComponent<RectTransform>();
-                    rt.SetParent(this.gameObject.transform);
+                    rt.SetParent(this.gameObject.transform, true);
                     Vector3 location = new Vector3();
-                    location.x = x * (blockSize+2);
+                    location.x = x * (blockSize+3);
                     location.y = y * blockSize;
                     rt.localPosition = location;
+                    rt.localScale = Vector3.one;
                     blocks[x][y] = bh;
                 }
             }
@@ -61,15 +62,16 @@ namespace NESTrisStatsViz.LineHistory
         {
             BlockTextureGenerator.BlockType type = (BlockTextureGenerator.BlockType)(line % 3);
             BlockTextureGenerator.Border border = BlockTextureGenerator.Border.BORDER;
-
+            
             for (int y = 0; y < 4; y++)
             {
+                BlockHandler block = blocks[index][y];
                 if (y >= line)
                 {
-                    blocks[index][y].gameObject.SetActive(false);
+                    block.gameObject.SetActive(false);
                     continue;
                 }
-                BlockHandler block = blocks[index][y];
+                
                 block.SetGlow(line == 4 ? 1.0f : 0.0f);
                 block.SetImage(BlockTextureGenerator.Instance.getLevelSprite(currentLevel, border, type));
                 block.gameObject.SetActive(true);

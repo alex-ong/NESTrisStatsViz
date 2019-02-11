@@ -14,7 +14,6 @@ namespace NESTrisStatsViz
         private Image image;
         public bool AutoRestart = false;
         public float AutoRestartTime = 5.0f;
-        private float BlinkTime = 0.1f;
         private float lastRestartTime;
         public string PythonExe;
         public string WorkingDir;
@@ -42,7 +41,7 @@ namespace NESTrisStatsViz
         void Update()
         {
             float alpha = 1.0f;
-            if ((Time.realtimeSinceStartup - statsLogger.LastMessageTimeStamp) > BlinkTime)
+            if ((Time.realtimeSinceStartup - statsLogger.LastMessageTimeStamp) > AutoRestartTime)
             {                
                 alpha = (Mathf.Sin(Time.realtimeSinceStartup * 4.0f) * 0.5f) + 0.5f;
                 
