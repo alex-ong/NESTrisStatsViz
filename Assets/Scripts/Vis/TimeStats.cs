@@ -12,7 +12,7 @@ namespace NESTrisStatsViz
         {
             get
             {
-                return 5;
+                return 8;
             }
         }
 
