@@ -39,8 +39,9 @@ namespace NESTrisStatsViz.LastTenGames
                     data = gss[i];
                     total += data.score;
                     gameCount += 1;
-                }
-                gameSummaries[i].UpdateGUI(gss[i]);
+                } 
+                
+                gameSummaries[i].UpdateGUI(data);
             }
 
             if (gameCount > 0)

@@ -19,12 +19,10 @@ namespace NESTrisStatsViz.LastTenGames
             if (gss == null)
             {
                 this.gameObject.SetActive(false);
+                return;
             }
-            else
-            {
-                this.gameObject.SetActive(true);
-            }
-
+            
+            gameObject.SetActive(true);            
             startLevel.text = gss.startLevel.ToString("00");
             score.text = gss.score.ToString("00");
             lines.text = gss.linesCleared.ToString("000");
