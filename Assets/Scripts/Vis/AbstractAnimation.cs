@@ -24,6 +24,11 @@ namespace NESTrisStatsViz
 
         protected virtual void ChildOnEnable() { }
 
+        public void OnDisable()
+        {
+            Hide();
+        }
+
         protected virtual void Hide() { }
 
         public void Update()
