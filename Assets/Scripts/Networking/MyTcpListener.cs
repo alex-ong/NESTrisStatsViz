@@ -8,6 +8,7 @@ using System.Threading;
 using System.Collections.Generic;
 using SimpleJSON;
 
+using NESTrisStatsViz;
 public class MyTcpListener : MonoBehaviour
 {
     public int port = 3338;
@@ -36,6 +37,10 @@ public class MyTcpListener : MonoBehaviour
         }
     }
 
+    public void Awake()
+    {
+        port = MainConfig.ReadValue("network", "port", 3338);
+    }
 
     public void Start()
     {

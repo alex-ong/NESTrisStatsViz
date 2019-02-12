@@ -16,7 +16,7 @@ namespace NESTrisStatsViz
         public float AutoRestartTime = 5.0f;
         private float lastRestartTime;
         public string PythonExe;
-        public string WorkingDir;
+        public string WorkingDir; 
         public string PythonScript;
 
         protected float EarliestRestartTime()
@@ -26,9 +26,11 @@ namespace NESTrisStatsViz
 
         private void Awake()
         {
+            PythonExe = MainConfig.ReadValue("network", "python", PythonExe);
+            WorkingDir = MainConfig.ReadValue("network", "workingdir", WorkingDir);
+            PythonScript = MainConfig.ReadValue("network", "pythonscript", PythonScript);
             image = this.GetComponent<Image>();
             lastRestartTime = float.Epsilon;
-            //todo; read python,workingdir,file from config.
         }
 
         private void ChangeAlpha(float a)
@@ -42,9 +44,9 @@ namespace NESTrisStatsViz
         {
             float alpha = 1.0f;
             if ((Time.realtimeSinceStartup - statsLogger.LastMessageTimeStamp) > AutoRestartTime)
-            {                
+            {
                 alpha = (Mathf.Sin(Time.realtimeSinceStartup * 4.0f) * 0.5f) + 0.5f;
-                
+
                 if (AutoRestart && Time.realtimeSinceStartup > EarliestRestartTime())
                 {
                     lastRestartTime = Time.realtimeSinceStartup;
