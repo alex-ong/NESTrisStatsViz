@@ -10,6 +10,7 @@ namespace NESTrisStatsViz
         {
             get
             {
+                if (isPostTransition()) return 0;
                 return 10;
             }
         }
@@ -19,7 +20,7 @@ namespace NESTrisStatsViz
         public List<Text> levels;
         public List<Text> lines;
         public List<Text> ratios;
-        public List<Text> dates;
+        public List<Text> dates;        
 
         private static string DateFormat = "yyyy/MM/dd";
         public override void FirstTimeSetup()

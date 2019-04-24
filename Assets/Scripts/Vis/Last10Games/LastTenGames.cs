@@ -13,6 +13,7 @@ namespace NESTrisStatsViz.LastTenGames
         {
             get
             {
+                if (isPostTransition()) return 0;
                 return 8f;
             }
         }

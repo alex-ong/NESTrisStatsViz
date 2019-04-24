@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ExtensionMethods;
 namespace NESTrisStatsViz
 {
     public class FallingBlocks : AbstractAnimation
@@ -10,6 +10,7 @@ namespace NESTrisStatsViz
         {
             get
             {
+                if (isPostTransition()) return 0;
                 return 10f;
             }
         }
@@ -48,7 +49,7 @@ namespace NESTrisStatsViz
         {
             numCubesShown = 0;
             startTimeStamp = Time.realtimeSinceStartup;
-            games = statsLogger.lifeTimeState.games;
+            games = statsLogger.lifeTimeState.games.LastN(1200);
             cubesMade = new List<GameObject>();
         }
 

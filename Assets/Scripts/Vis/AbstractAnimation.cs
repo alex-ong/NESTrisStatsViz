@@ -38,5 +38,14 @@ namespace NESTrisStatsViz
         }
         public virtual void ChildUpdate() { }
 
+        public bool isPostTransition()
+        {
+            if (statsLogger.gameState != null)
+            {
+                return (statsLogger.gameState.currentLevel >= 19
+                    && statsLogger.gameState.startLevel < 19);
+            }
+            return false;
+        }
     }
 }
