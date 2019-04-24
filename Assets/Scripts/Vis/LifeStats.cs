@@ -7,6 +7,7 @@ namespace NESTrisStatsViz
         {
             get
             {
+                if (isPostTransition()) return 0f;
                 return 10f;
             }
         }

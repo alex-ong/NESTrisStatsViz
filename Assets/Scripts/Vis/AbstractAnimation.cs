@@ -42,8 +42,9 @@ namespace NESTrisStatsViz
         {
             if (statsLogger.gameState != null)
             {
-                return (statsLogger.gameState.currentLevel >= 19
-                    && statsLogger.gameState.startLevel < 19);
+                bool result = (statsLogger.gameState.currentLevel >= 19
+                            && statsLogger.gameState.startLevel < 19);
+                return result;
             }
             return false;
         }

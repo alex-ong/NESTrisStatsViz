@@ -12,7 +12,7 @@ namespace NESTrisStatsViz
         {
             get
             {
-                if (isPostTransition()) return 2;
+                if (isPostTransition()) return 0f;
                 return 8;
             }
         }
