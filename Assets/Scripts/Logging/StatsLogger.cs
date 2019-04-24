@@ -6,20 +6,26 @@ using UnityEngine;
 
 namespace NESTrisStatsViz
 {
+    [RequireComponent(typeof(LifeTimeState))]
     public class StatsLogger : MonoBehaviour
     {
         public NetworkEventGrabber events;
-        // Use this for initialization
+        public StatState prevState = null;
+        public GameState gameState = null;
+        public LifeTimeState lifeTimeState;
+        private float lastMessageTimeStamp = 0.0f;
+        public float LastMessageTimeStamp { get { return lastMessageTimeStamp; } }
+
+        private void Awake()
+        {
+            lifeTimeState = this.GetComponent<LifeTimeState>();
+        }
+
         void Start()
         {
             events.onMessage += this.processEvent;
         }
 
-        public StatState prevState = null;
-        public GameState gameState = null;
-        public LifeTimeState lifeTimeState = new LifeTimeState();
-        private float lastMessageTimeStamp = 0.0f;
-        public float LastMessageTimeStamp { get { return lastMessageTimeStamp; } }
         private bool isNewGame(StatState prevState, StatState current)
         {
             return (!prevState.IsValid && current.Lines == 0);

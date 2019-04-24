@@ -1,26 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using System.IO;
 using System;
 namespace NESTrisStatsViz
 {
-    public class LifeTimeState
+    public class LifeTimeState : MonoBehaviour
     {
         private int totalGames;
         private int totalLines;
         private int totalSoftDrop;
 
         public List<GameStateSummary> games = new List<GameStateSummary>();
-        
-        static string GAME_STATS = "game_stats.txt";
-        static string BASE_DIR = "C:/NESTrisStats/data/";
+
         public GameState current;
 
         public int TotalGames { get { return totalGames; } }
         public int TotalLines { get { return totalLines + (current == null ? 0 : current.LinesCleared); } }
         public int TotalSoftDrop { get { return totalSoftDrop + (current == null ? 0 : current.softDropTotal); } }
         private TimeSpan totalGameTime;
-        public TimeSpan TotalGameTime {  get { return totalGameTime + (current == null ? TimeSpan.Zero : current.Duration); } }
-        public LifeTimeState()
+        public TimeSpan TotalGameTime { get { return totalGameTime + (current == null ? TimeSpan.Zero : current.Duration); } }
+
+        static string GAME_STATS { get { return MainConfig.ReadValue("data", "file", "game_stats.txt"); } }
+        static string BASE_DIR { get { return MainConfig.ReadValue("data", "basedir", "C:/NESTrisStats/data/"); } }
+        static string DATABASE { get { return System.IO.Path.Combine(BASE_DIR, GAME_STATS); } }
+
+        public void Awake()
         {
             System.IO.Directory.CreateDirectory(BASE_DIR);
             LoadFromFile();
@@ -28,9 +32,9 @@ namespace NESTrisStatsViz
 
         public void LoadFromFile()
         {
-            if (File.Exists(BASE_DIR + GAME_STATS))
+            if (File.Exists(DATABASE))
             {
-                string[] data = File.ReadAllLines(BASE_DIR + GAME_STATS);
+                string[] data = File.ReadAllLines(DATABASE);
                 foreach (string line in data)
                 {
                     GameStateSummary gs = new GameStateSummary(line);
@@ -58,13 +62,13 @@ namespace NESTrisStatsViz
             totalGameTime += gs.Duration;
             GameStateSummary summary = new GameStateSummary(gs);
             games.Add(summary);
-            
+
             //save the summary.
-            if (File.Exists(BASE_DIR + GAME_STATS))
+            if (File.Exists(DATABASE))
             {
-                File.Copy(BASE_DIR + GAME_STATS, BASE_DIR + GAME_STATS + ".bak", true);
+                File.Copy(DATABASE, DATABASE + ".bak", true);
             }
-            File.AppendAllText(BASE_DIR + GAME_STATS, summary.ExportToFile() + "\r\n");
+            File.AppendAllText(DATABASE, summary.ExportToFile() + "\r\n");
             this.current = null;
         }
     }
