@@ -73,7 +73,7 @@ namespace NESTrisStatsViz
                 current.gameObject.SetActive(true);
             }
 
-            if (current.Timer >= current.Duration && !isPaused)
+            while (current.Timer >= current.Duration && !isPaused)
             {
                 Next();
             }
