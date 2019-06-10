@@ -9,7 +9,13 @@ namespace NESTrisStatsViz
             Score = valueToInt(node, "score");
             Lines = valueToInt(node, "lines");
             Level = valueToInt(node, "level");
-
+            T = pieceStatToInt(node, "T");
+            J = pieceStatToInt(node, "J");
+            Z = pieceStatToInt(node, "Z");
+            O = pieceStatToInt(node, "O");
+            S = pieceStatToInt(node, "S");
+            L = pieceStatToInt(node, "L");
+            I = pieceStatToInt(node, "I");
         }
 
         //Only call if both area isValid!
@@ -20,6 +26,16 @@ namespace NESTrisStatsViz
             result.Score = other.Score - this.Score;
             result.Lines = other.Lines - this.Lines;
             result.Level = other.Level - this.Level;
+            result.T = other.T - this.T;
+            result.J = other.J - this.J;
+            result.Z = other.Z - this.Z;
+            result.O = other.O - this.O;
+            result.S = other.S - this.S;
+            result.L = other.L - this.L;
+            result.I = other.I - this.I;
+            result.IsValidMainStats = other.IsValidMainStats || this.IsValidMainStats;
+            result.IsValidPieceStats = other.IsValidPieceStats || this.IsValidPieceStats;
+
             return result;
         }
 
@@ -35,10 +51,22 @@ namespace NESTrisStatsViz
                 return int.Parse(node[key]);
             }
         }
-        
 
+        private int pieceStatToInt(SimpleJSON.JSONNode node, string key)
+        {
+            if (node[key] == null)
+            {
+                IsValidPieceStats = false;
+                return -1;
+            }
+            else
+            {
+                return int.Parse(node[key]);
+            }
+        }
 
         public bool IsValidMainStats { get; private set; } = true;
+        public bool IsValidPieceStats { get; private set; } = true;
         public int Score { get; private set; }
         public int Lines { get; private set; }
         public int Level { get; private set; }

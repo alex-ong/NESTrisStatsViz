@@ -13,6 +13,7 @@ namespace NESTrisStatsViz
         public List<int> tenLineScores = new List<int>();
         public List<int> tenLineGoal = new List<int>();
         public List<int> lineHistory = new List<int>();
+        public List<string> pieceHistory = new List<string>();
         public int[] distClears = new int[4];
         public int[] distScores = new int[4];
 
@@ -58,6 +59,7 @@ namespace NESTrisStatsViz
             finishTime = DateTime.Now;
             ProcessSoftDrop(diff, current);
             ProcessLineScore(diff, current);
+            ProcessPieceDiff(diff, current);
             currentLevel = current.Level;
             lastState = current;
         }
@@ -111,6 +113,42 @@ namespace NESTrisStatsViz
             else
             {
                 softDropTotal += diff.Score - ScoreTable.getScore(diff.Lines, newState.Level);
+            }
+        }
+        private void ProcessPieceDiff(StatState diff, StatState newState)
+        {
+            if (diff.IsValidPieceStats)
+            {
+                int startLength = pieceHistory.Count;
+                if (diff.T == 1)
+                {
+                    pieceHistory.Add("T");
+                }
+                else if (diff.J == 1)
+                {
+                    pieceHistory.Add("J");
+                }
+                else if (diff.Z == 1)
+                {
+                    pieceHistory.Add("Z");
+                }
+                else if (diff.O == 1)
+                {
+                    pieceHistory.Add("O");
+                }
+                else if (diff.S == 1)
+                {
+                    pieceHistory.Add("S");
+                }
+                else if (diff.L == 1)
+                {
+                    pieceHistory.Add("L");
+                }
+                else if (diff.I == 1)
+                {
+                    pieceHistory.Add("I");
+                }
+
             }
         }
     }
