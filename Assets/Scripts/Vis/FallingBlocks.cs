@@ -49,7 +49,7 @@ namespace NESTrisStatsViz
         {
             numCubesShown = 0;
             startTimeStamp = Time.realtimeSinceStartup;
-            games = statsLogger.lifeTimeState.games.LastN(1200);
+            games = statsLogger.lifeTimeState.games.LastN(300);
             cubesMade = new List<GameObject>();
         }
 

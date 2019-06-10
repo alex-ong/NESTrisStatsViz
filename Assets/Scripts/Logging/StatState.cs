@@ -6,9 +6,10 @@ namespace NESTrisStatsViz
         public StatState() { }
         public StatState(SimpleJSON.JSONNode node)
         {
-            score = valueToInt(node, "score");
-            lines = valueToInt(node, "lines");
-            level = valueToInt(node, "level");
+            Score = valueToInt(node, "score");
+            Lines = valueToInt(node, "lines");
+            Level = valueToInt(node, "level");
+
         }
 
         //Only call if both area isValid!
@@ -16,9 +17,9 @@ namespace NESTrisStatsViz
         public StatState diff(StatState other)
         {
             StatState result = new StatState();
-            result.score = other.score - this.score;
-            result.lines = other.lines - this.lines;
-            result.level = other.level - this.level;
+            result.Score = other.Score - this.Score;
+            result.Lines = other.Lines - this.Lines;
+            result.Level = other.Level - this.Level;
             return result;
         }
 
@@ -26,7 +27,7 @@ namespace NESTrisStatsViz
         {
             if (node[key] == null)
             {
-                isValid = false;
+                IsValidMainStats = false;
                 return -1;
             }
             else
@@ -34,18 +35,22 @@ namespace NESTrisStatsViz
                 return int.Parse(node[key]);
             }
         }
+        
 
-        private bool isValid = true;
-        private int score;
-        private int lines;
-        private int level;
 
-        public bool IsValid { get { return isValid; } }
-        public int Score { get { return score; } }
-        public int Lines { get { return lines; } }
-        public int Level { get { return level; } }
+        public bool IsValidMainStats { get; private set; } = true;
+        public int Score { get; private set; }
+        public int Lines { get; private set; }
+        public int Level { get; private set; }
+        public int T { get; private set; }
+        public int J { get; private set; }
+        public int Z { get; private set; }
+        public int O { get; private set; }
+        public int S { get; private set; }
+        public int L { get; private set; }
+        public int I { get; private set; }
 
-        public bool NonZero { get { return score != 0 || lines != 0 || level != 0; } }
+        public bool NonZero { get { return Score != 0 || Lines != 0 || Level != 0; } }
 
         public override string ToString()
         {

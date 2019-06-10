@@ -28,7 +28,7 @@ namespace NESTrisStatsViz
 
         private bool isNewGame(StatState prevState, StatState current)
         {
-            return (!prevState.IsValid && current.Lines == 0);
+            return (!prevState.IsValidMainStats && current.Lines == 0);
         }
 
         private void OnNewGame()
@@ -45,7 +45,7 @@ namespace NESTrisStatsViz
         {
             lastMessageTimeStamp = Time.realtimeSinceStartup;
             StatState currentState = new StatState(obj);
-            if (currentState.IsValid)
+            if (currentState.IsValidMainStats)
             {
                 if (prevState == null || isNewGame(prevState, currentState)) //first game
                 {
