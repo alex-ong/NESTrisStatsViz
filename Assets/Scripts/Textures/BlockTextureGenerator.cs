@@ -45,7 +45,6 @@ public class BlockTextureGenerator : Singleton<BlockTextureGenerator>
         return index;
     }
 
-
     public Sprite getLevelSprite(int level, Border b, BlockType bt)
     {
         if (!ready) return null;

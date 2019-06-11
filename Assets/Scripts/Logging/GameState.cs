@@ -42,6 +42,7 @@ namespace NESTrisStatsViz
                 startTime = DateTime.Now;
                 finishTime = DateTime.Now;
                 GenerateTenLineGoal();
+                ProcessPieceDiff(current); //get first piece.
                 return;
             }
             StatState diff = lastState.diff(current);
@@ -59,7 +60,7 @@ namespace NESTrisStatsViz
             finishTime = DateTime.Now;
             ProcessSoftDrop(diff, current);
             ProcessLineScore(diff, current);
-            ProcessPieceDiff(diff, current);
+            ProcessPieceDiff(diff);
             currentLevel = current.Level;
             lastState = current;
         }
@@ -115,11 +116,11 @@ namespace NESTrisStatsViz
                 softDropTotal += diff.Score - ScoreTable.getScore(diff.Lines, newState.Level);
             }
         }
-        private void ProcessPieceDiff(StatState diff, StatState newState)
+
+        private void ProcessPieceDiff(StatState diff)
         {
             if (diff.IsValidPieceStats)
             {
-                int startLength = pieceHistory.Count;
                 if (diff.T == 1)
                 {
                     pieceHistory.Add("T");
@@ -148,6 +149,7 @@ namespace NESTrisStatsViz
                 {
                     pieceHistory.Add("I");
                 }
+
 
             }
         }

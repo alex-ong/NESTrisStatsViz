@@ -12,6 +12,8 @@ namespace NESTrisStatsViz.PieceStats
         private GameState lastGameState = null;
         private int lastPieceCount = 0;
         // Update is called once per frame
+        public Action OnGameStateChange;
+        public Action OnGameReset;
 
         public int[] droughtArray = new int[] { 0, 0, 0, 0, 0, 0, 0 };
         private static readonly string[] PIECES = new string[] { "T", "J", "Z", "O", "S", "L", "I" };
@@ -23,6 +25,7 @@ namespace NESTrisStatsViz.PieceStats
                 droughtArray[i] = 0;
             }
             lastPieceCount = 0;
+            OnGameReset();
         }
 
         void Update()
@@ -61,6 +64,7 @@ namespace NESTrisStatsViz.PieceStats
                 }                   
             }
             lastPieceCount = lastIndex + 1;
+            OnGameStateChange();
         }
     }
 }
