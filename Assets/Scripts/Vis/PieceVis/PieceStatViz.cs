@@ -61,6 +61,7 @@ namespace NESTrisStatsViz.PieceStats
             if (!ready) return;
             if (ps.statsLogger.gameState != null)
             {
+                int level = ps.statsLogger.gameState.currentLevel;
                 List<string> history = ps.statsLogger.gameState.pieceHistory;
                 history = history.LastN(HISTORY_LENGTH);
                 for (int piece = 0; piece < 7; piece++)
@@ -71,7 +72,9 @@ namespace NESTrisStatsViz.PieceStats
                         if (pieceString == history[i])
                         {
                             data[piece, i].gameObject.SetActive(true);
-
+                            data[piece, i].SetImage(BlockTextureGenerator.Instance.getLevelSprite(level,
+                                                    BlockTextureGenerator.Border.ORIGINAL,
+                                                    BlockTextureGenerator.BlockType.WHITE));
                         }
                         else
                         {

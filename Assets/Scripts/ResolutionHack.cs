@@ -8,7 +8,7 @@ public class ResolutionHack : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        SetAspectRatio();
+        
     }
 
     public void SetAspectRatio()
