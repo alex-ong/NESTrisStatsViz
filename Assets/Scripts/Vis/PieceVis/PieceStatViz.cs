@@ -86,6 +86,7 @@ namespace NESTrisStatsViz.PieceStats
         }
         private void ResetPieceStatViz()
         {
+            if (!ready) return;
             for (int piece = 0; piece < 7; piece++)
             {
                 for (int i = 0; i < HISTORY_LENGTH; i++)

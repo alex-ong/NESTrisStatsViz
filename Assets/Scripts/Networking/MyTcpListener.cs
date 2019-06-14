@@ -109,7 +109,7 @@ public class MyTcpListener : MonoBehaviour
         Debug.Log("\nHit enter to continue...");
     }
 
-    private void HandleClient(object clientObject)
+    private async void HandleClient(object clientObject)
     {
         TcpClient client = (TcpClient)clientObject;
         client.NoDelay = true;
@@ -133,9 +133,10 @@ public class MyTcpListener : MonoBehaviour
             // Loop to receive all the data sent by the client.
             while (!stopped)
             {
+                                
                 if (stream.CanRead)
-                {
-                    bytesRead = stream.Read(bytes, 0, bytes.Length);
+                {                    
+                    bytesRead = await stream.ReadAsync(bytes, 0, bytes.Length);
                     copyData(currentBuffer, bytes, bytesRead);
                     if (header == -1)
                     {
@@ -162,6 +163,7 @@ public class MyTcpListener : MonoBehaviour
                     Debug.Log("breaking?");
                     break;
                 }
+                
             }
         }
         catch (SocketException e)
