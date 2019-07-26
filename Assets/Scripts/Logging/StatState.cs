@@ -6,7 +6,7 @@ namespace NESTrisStatsViz
         public StatState() { }
         public StatState(SimpleJSON.JSONNode node)
         {
-            Score = valueToInt(node, "score");
+            Score = valueToInt(node, "score", true);
             Lines = valueToInt(node, "lines");
             Level = valueToInt(node, "level");
             T = pieceStatToInt(node, "T");
@@ -39,7 +39,12 @@ namespace NESTrisStatsViz
             return result;
         }
 
-        private int valueToInt(SimpleJSON.JSONNode node, string key)
+        private int HexToInt(string s)
+        {
+            return int.Parse(s, System.Globalization.NumberStyles.HexNumber);
+        }
+
+        private int valueToInt(SimpleJSON.JSONNode node, string key, bool hexFirst = false)
         {
             if (node[key] == null)
             {
@@ -48,7 +53,18 @@ namespace NESTrisStatsViz
             }
             else
             {
-                return int.Parse(node[key]);
+                if (hexFirst)
+                {
+                    string result = node[key];
+                    string firstDigit = result.Substring(0, 1);
+                    string remainder = result.Substring(1, result.Length - 1);
+                    int first =  HexToInt(firstDigit) * 100000;
+                    return int.Parse(remainder) + first;
+                } else
+                {
+                    return int.Parse(node[key]);
+                }
+                
             }
         }
 
