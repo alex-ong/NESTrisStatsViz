@@ -20,12 +20,13 @@ namespace NESTrisStatsViz
         public int softDropTotal = 0;
         private StatState lastState = null;
         public int LinesCleared { get { return lastState.Lines; } }
-        public int Score { get { return lastState.Score; } }
-        private DateTime startTime;
-        public DateTime StartTime { get { return startTime; } }
-        private DateTime finishTime;
-        public DateTime FinishTime { get { return finishTime; } }
-        public TimeSpan Duration { get { return finishTime - startTime; } }
+        public int Score { get { return lastState.Score; } }        
+        public DateTime StartTime { get; private set;}        
+        public DateTime FinishTime { get; private set; }
+        public TimeSpan Duration { get { return FinishTime - StartTime; } }
+
+        private bool leveledUp = false;
+        private int firstLevelUpBoundary = 0;
 
         private void GenerateTenLineGoal()
         {
@@ -39,13 +40,18 @@ namespace NESTrisStatsViz
                 lastState = current;
                 startLevel = current.Level;
                 currentLevel = current.Level;
-                startTime = DateTime.Now;
-                finishTime = DateTime.Now;
+                StartTime = DateTime.Now;
+                FinishTime = DateTime.Now;
                 GenerateTenLineGoal();
                 ProcessPieceDiff(current); //get first piece.
                 return;
             }
+
+            //First, we have to fix the level.
             StatState diff = lastState.diff(current);
+            ProcessLevel(diff, current);
+            current.Level = this.currentLevel;
+            diff = lastState.diff(current);
 
             //quick sanity check
             if (!LegitDiff(diff, current))
@@ -57,13 +63,15 @@ namespace NESTrisStatsViz
                 return;
             }
 
-            finishTime = DateTime.Now;
+            FinishTime = DateTime.Now;
             ProcessSoftDrop(diff, current);
             ProcessLineScore(diff, current);
             ProcessPieceDiff(diff);
-            currentLevel = current.Level;
+            
+            
             lastState = current;
         }
+
 
         private bool LegitDiff(StatState diff, StatState current)
         {
@@ -71,13 +79,11 @@ namespace NESTrisStatsViz
             {
                 Debug.Log("lines" + diff.Lines.ToString());
                 return false;
-            }
-
+            }            
             if (diff.Level < 0 || diff.Level > 1)
             {
-                return false;
+                Debug.Log("level" + diff.Level);
             }
-
             //we scored more than a tetris + softdrop...
             if (diff.Score > ScoreTable.getScore(4, current.Level) + 50)
             {
@@ -117,6 +123,25 @@ namespace NESTrisStatsViz
             }
         }
 
+        /// <summary>
+        /// Level is calculated purely on linecount. We get the first level transition to work off.
+        /// </summary>
+        /// <param name="diff"></param>
+        /// <param name="current"></param>
+        private void ProcessLevel(StatState diff, StatState current)
+        {            
+            if (!leveledUp && diff.Level != 0)
+            {
+                firstLevelUpBoundary = (current.Lines / 10) * 10;
+                this.currentLevel = this.startLevel + 1;
+                leveledUp = true;
+            }
+            else if (leveledUp)
+            {                
+                this.currentLevel = ((current.Lines - firstLevelUpBoundary) / 10) + 1 + startLevel;                
+            }
+        }
+
         private void ProcessPieceDiff(StatState diff)
         {
             if (diff.IsValidPieceStats)
@@ -149,8 +174,6 @@ namespace NESTrisStatsViz
                 {
                     pieceHistory.Add("I");
                 }
-
-
             }
         }
     }
