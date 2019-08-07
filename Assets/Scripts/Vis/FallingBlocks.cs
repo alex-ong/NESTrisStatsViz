@@ -39,8 +39,8 @@ namespace NESTrisStatsViz
             }
         }
         
-        private int numCubesShown = 0;
-        private float startTimeStamp;
+        protected int numCubesShown = 0;
+        protected float startTimeStamp;
         protected List<GameStateSummary> games;
         public GameObject cube;
         protected List<GameObject> cubesMade;
