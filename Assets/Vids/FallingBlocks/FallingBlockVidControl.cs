@@ -25,10 +25,17 @@ namespace NESTrisStatsViz
                 {
                     this.blockVid.enabled = true;
                     s++;
-                } else if (s == State.BlocksEnabled)
+                }
+                else if (s == State.BlocksEnabled)
                 {
                     platform.SetActive(false);
                     s++;
+                }
+                else if (s == State.Finish)
+                {
+                    this.blockVid.enabled = false;
+                    platform.SetActive(true);
+                    s = State.Start;
                 }
             }
         }
