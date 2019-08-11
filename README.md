@@ -1,6 +1,7 @@
 # NESTrisStatsViz
 Simple Visualization for statistics
 
+![Image](https://raw.githubusercontent.com/alex-ong/NESTrisStatsViz/master/Preview.png)
 
 # Installation
 
