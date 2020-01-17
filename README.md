@@ -9,8 +9,8 @@ Simple Visualization for statistics
 
 2) Edit the config file (NESTrisStatsViz_Data\StreamingAssets\config.ini) to point to the right places
  - `python`: This is the executable; it should point to wherever you installed it
- - `workingdir`:  the directory where screecap.py resides
- - `pythonscript`: point this to screencap.py
+ - `workingdir`:  the directory where main.py resides (from NESTrisOCR)
+ - `pythonscript`: point this to main.py (from NESTrisOCR)
  - `basedir`: This is where your game statistics will be saved. It saves in a .csv format, openable by excel
  
 3) Run the exe. It should automatically start the OCR python program.
