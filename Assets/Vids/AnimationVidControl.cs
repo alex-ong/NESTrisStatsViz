@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace NESTrisStatsViz
 {
-    public class FallingBlockVidControl : MonoBehaviour
+    public class AnimationVidControl : MonoBehaviour
     {
 
-        public FallingBlockVid blockVid;
+        public AbstractAnimation blockVid;
         public GameObject platform;
         private enum State
         {
@@ -15,6 +15,7 @@ namespace NESTrisStatsViz
             BlocksEnabled,
             Finish
         }
+
         private State s = State.Start;
         // Update is called once per frame
         void Update()

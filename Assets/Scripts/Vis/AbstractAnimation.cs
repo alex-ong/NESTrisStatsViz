@@ -40,7 +40,7 @@ namespace NESTrisStatsViz
 
         public bool isPostTransition()
         {
-            if (statsLogger.gameState != null)
+            if (statsLogger != null && statsLogger.gameState != null)
             {
                 bool result = (statsLogger.gameState.currentLevel >= 19
                             && statsLogger.gameState.startLevel < 19);
